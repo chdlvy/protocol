@@ -1,0 +1,25 @@
+
+syntax = "proto3";
+option go_package = "github.com/chdlvy/protocol/push";
+package ChatIM.push;
+import "common/common.proto";
+service PushMsgService {
+  rpc PushMsg(PushMsgReq) returns(PushMsgResp);
+  rpc DelUserPushToken(DelUserPushTokenReq) returns(DelUserPushTokenResp);
+}
+message PushMsgReq {
+  common.MsgData msgData = 1;
+}
+
+message PushMsgResp{
+}
+
+message DelUserPushTokenReq{
+  string userID = 1;
+  int32 platformID = 2;
+}
+
+message DelUserPushTokenResp{
+}
+
+
