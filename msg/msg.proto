@@ -10,28 +10,6 @@ service msg {
   //搜索消息
   rpc SearchMessage(SearchMessageReq) returns(SearchMessageResp);
 }
-//message MsgData {
-//
-//  string  sendID = 1;
-//  string  recvID = 2;
-//  string groupID = 3;
-//  string clientMsgID = 4;
-//  string serverMsgID = 5;
-//  int32 senderPlatformID = 6;
-//  string senderNickname = 7;
-//  string senderFaceURL = 8;
-//  int32 sessionType = 9;
-//  int32 msgFrom = 10;
-//  int32 contentType = 11;
-//  bytes content = 12;
-//  int64 seq = 14;
-//  int64 sendTime = 15;
-//  int64 createTime = 16;
-//  int32 status = 17;
-//  bool isRead = 18;
-//  map<string, bool> options = 19;
-//  string ex = 23;
-//}
 message ChatLog {
   string serverMsgID = 1;
   string clientMsgID = 2;
