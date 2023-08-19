@@ -11,6 +11,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	"server/internal/rpc/msg"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -100,7 +101,7 @@ type UnsafeMsgServer interface {
 	mustEmbedUnimplementedMsgServer()
 }
 
-func RegisterMsgServer(s grpc.ServiceRegistrar, srv MsgServer) {
+func RegisterMsgServer(s grpc.ServiceRegistrar, srv *msg.MsgServer) {
 	s.RegisterService(&Msg_ServiceDesc, srv)
 }
 

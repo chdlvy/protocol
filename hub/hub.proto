@@ -1,0 +1,13 @@
+syntax = "proto3";
+package ChatIM.hub;
+option go_package = "github.com/chdlvy/protocol/hub";
+import "common/common.proto";
+service hub {
+  rpc OnlinePushMsg(OnlinePushMsgReq) returns(OnlinePushMsgResp);
+}
+message OnlinePushMsgReq {
+  common.MsgData msgData = 1;
+}
+message OnlinePushMsgResp {
+
+}
