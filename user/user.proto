@@ -1,0 +1,43 @@
+syntax = "proto3";
+option go_package = "github.com/chdlvy/protocol/user";
+package ChatIM.push;
+service UserService{
+  rpc Login(LoginReq) returns(LoginResp);
+  rpc Logout(LogoutReq) returns(LogoutResp);
+  rpc Register(RegisterReq) returns(RegisterResp);
+  rpc CheckAuth(CheckAuthReq) returns(CheckAuthResp);
+
+}
+
+message LoginReq {
+    string Password = 1;
+    string Phone = 2;
+}
+message LoginResp {
+  int32 Code =1;
+  string AuthToken = 2;
+}
+message LogoutReq {
+  string AuthToken = 1;
+}
+message LogoutResp {
+  int32 Code =1;
+}
+
+message RegisterReq {
+  string UserName = 1;
+  string Password = 2;
+  string Phone = 3;
+}
+message RegisterResp {
+  int32 Code =1;
+  string AuthToken = 2;
+}
+message CheckAuthReq {
+  string AuthToken = 1;
+}
+message CheckAuthResp {
+  int32 Code =1 ;
+  string UserID =2;
+  string UserName =3;
+}
