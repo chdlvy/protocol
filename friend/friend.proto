@@ -1,5 +1,6 @@
 
 syntax = "proto3";
+import "google/protobuf/timestamp.proto";
 option go_package = ".";
 message FriendRequest {
   string fromUserID = 1;
@@ -45,14 +46,26 @@ message applyToAddFriendReq{
 }
 message applyToAddFriendResp{
 }
+message agreeFrendReq{
+  string fromUserID = 1;
+  string toUserID = 2;
+}
+message agreeFrendResp {
+}
+message RefuseFriendReq {
+  string fromUserID = 1;
+  string toUserID = 2;
+}
+message RefuseFriendResp {
+
+}
 
 
-
-message getPaginationFriendsApplyToReq{
+message getFriendReqToMeReq{
   string userID = 1;
 
 }
-message getPaginationFriendsApplyToResp{
+message getFriendReqToMeResp{
   repeated FriendRequest FriendRequests = 1;
   int32 total = 2;
 }
@@ -111,14 +124,7 @@ message deleteFriendResp{
 }
 
 //process
-message respondFriendApplyReq{
-  string fromUserID = 1; //主动发起的申请者
-  string toUserID = 2;   //被动添加者
-  int32  handleResult = 3;
-  string handleMsg = 4;
-}
-message respondFriendApplyResp{
-}
+
 
 message setFriendRemarkReq{
   string ownerUserID = 1;
@@ -128,10 +134,10 @@ message setFriendRemarkReq{
 message setFriendRemarkResp{
 }
 
-message getPaginationFriendsApplyFromReq{
+message getFriendReqFromMeReq{
   string userID = 1;
 }
-message getPaginationFriendsApplyFromResp{
+message getFriendReqFromMeResp{
   repeated FriendRequest friendRequests = 1;
   int32 total = 2;
 }
@@ -144,13 +150,34 @@ message getFriendIDsResp {
   repeated string friendIDs = 1;
 }
 
+
+message Friend {
+  uint64 ownerUserID = 1;
+  uint64 friendUserID = 2;
+  string remark = 3;
+  google.protobuf.Timestamp CreateTime = 4;
+  int32 addSource = 5;
+
+}
+message getFriendListReq {
+  string ownerUserID = 1;
+}
+
+message getFriendListResp {
+  repeated Friend friends = 1;
+}
+
 service friend{
   //申请加好友
   rpc applyToAddFriend(applyToAddFriendReq) returns(applyToAddFriendResp);
+  //同意添加好友
+  rpc agreeFriend(agreeFrendReq) returns(agreeFrendResp);
+  //拒绝好友
+  rpc refuseFriend(RefuseFriendReq) returns(RefuseFriendResp);
   //获取收到的好友申请列表
-  rpc getPaginationFriendsApplyTo(getPaginationFriendsApplyToReq) returns(getPaginationFriendsApplyToResp);
+  rpc getFriendReqToMe(getFriendReqToMeReq) returns(getFriendReqToMeResp);
   //获取主动发出去的好友申请列表
-  rpc getPaginationFriendsApplyFrom(getPaginationFriendsApplyFromReq) returns(getPaginationFriendsApplyFromResp);
+  rpc getFriendReqFromMe(getFriendReqFromMeReq) returns(getFriendReqFromMeResp);
   //添加黑名单
   rpc addBlack(addBlackReq) returns(addBlackResp);
   //移除黑名单
@@ -163,8 +190,7 @@ service friend{
   rpc getPaginationBlacks(getPaginationBlacksReq) returns(getPaginationBlacksResp);
   //删除好友
   rpc deleteFriend(deleteFriendReq) returns(deleteFriendResp);
-  //对好友申请响应（同意或拒绝）
-  rpc respondFriendApply(respondFriendApplyReq) returns(respondFriendApplyResp);
+  
   //设置好友备注
   rpc setFriendRemark(setFriendRemarkReq) returns(setFriendRemarkResp);
 
@@ -172,4 +198,6 @@ service friend{
   rpc getPaginationFriends(getPaginationFriendsReq) returns (getPaginationFriendsResp);
   // 获取好友ID列表
   rpc getFriendIDs(getFriendIDsReq) returns (getFriendIDsResp);
+  //获取所有好友
+  rpc getFriendList(getFriendListReq) returns (getFriendListResp);
 }
